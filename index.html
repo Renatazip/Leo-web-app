@@ -36,7 +36,6 @@
         tg.expend();
         
         send.addEventListener("click", () => {
-            tg.close();
             var eat = document.getElementById('eat').value;
             var time = document.getElementById('time').value;
             var hungerLevel = document.getElementById('hunger-level').value;
@@ -56,6 +55,8 @@
             }
 
             tg.sendData(JSON.stringify(data));
+
+            tg.close();
         });
 
 
