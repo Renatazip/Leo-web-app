@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Дневник питания</title>
+</head>
+<body>
+    <form>
+        <label for="eat">Что ты ела?</label>
+        <input type="text" id="eat" name="eat"><br><br>
+
+        <label for="time">Во сколько:</label>
+        <input type="time" id="time" name="time" value="now"><br><br>
+        
+        <label for="hunger-level">Уровень голода до еды:</label>
+        <input type="range" id="hunger-level" name="hungerlevel" min="1" max="10"><br><br>
+        
+        <label for="reasons">Причины поесть:</label>
+        <input type="text" id="reasons" name="reasons"><br><br>
+        
+        <label for="satisfaction-level">Уровень насыщения после еды:</label>
+        <input type="range" id="satisfaction-level" name="satisfactionlevel" min="1" max="10"><br><br>
+        
+        <label for="feelings">Ощущения после:</label>
+        <input type="text" id="feelings" name="feelings"><br><br>
+        
+        <label for="comments">Комментарий:</label>
+        <input type="text" id="comments" name="comments" ><br><br>
+        
+        <button id="send">Сохранить прием пищи</button>
+    </form>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.Webapp;
+        let send = document.getElementById("send");
+        tg.expend();
+        
+        send.addEventListener("click", () => {
+            tg.close();
+            var eat = document.getElementById('eat').value;
+            var time = document.getElementById('time').value;
+            var hungerLevel = document.getElementById('hunger-level').value;
+            var reasons = document.getElementById('reasons').value;
+            var satisfactionLevel = document.getElementById('satisfaction-level').value;
+            var feelings = document.getElementById('feelings').value;
+            var comments = document.getElementById('comments').value;
+
+            let data = {
+                eat: eat,
+                time: time,
+                hungerLevel: hungerLevel,
+                reasons: reasons,
+                satisfactionLevel: satisfactionLevel,
+                feelings: feelings,
+                comments: comments
+            }
+
+            tg.sendData(JSON.stringify(data));
+        });
+
+
+    
+    </script>
+</body>
+</html>
+
+
+<!-- var eat = document.getElementById('eat').value;
+        var time = document.getElementById('time').value;
+        var hungerLevel = document.getElementById('hunger-level').value;
+        var reasons = document.getElementById('reasons').value;
+        var satisfactionLevel = document.getElementById('satisfaction-level').value;
+        var feelings = document.getElementById('feelings').value;
+        var comments = document.getElementById('comments').value; -->
+
+        <!-- document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Get form input values
+            var eat = document.getElementById('eat').value;
+            var time = document.getElementById('time').value;
+            var hungerLevel = document.getElementById('hunger-level').value;
+            var reasons = document.getElementById('reasons').value;
+            var satisfactionLevel = document.getElementById('satisfaction-level').value;
+            var feelings = document.getElementById('feelings').value;
+            var comments = document.getElementById('comments').value;
+            
+            // Display the form data in the console
+            console.log('Eaten Food: ', eat);
+            console.log('Time: ', time);
+            console.log('Hunger Level: ', hungerLevel);
+            console.log('Reasons: ', reasons);
+            console.log('Satisfaction Level: ', satisfactionLevel);
+            console.log('Feelings: ', feelings);
+            console.log('Comments: ', comments);
+            
+            // You can further process or submit the form data here
+        }); -->
