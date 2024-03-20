@@ -27,7 +27,11 @@
         send.addEventListener("click", () => {
             var eat = document.getElementById('eat').value;
 
-            tg.sendData(eat);
+            let data = {
+                eat: eat
+            }
+
+            tg.sendData(JSON.stringify(data));
 
             tg.close();
         });
