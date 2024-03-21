@@ -21,9 +21,8 @@
     </form>
     
     <script>
-        let tg = Telegram.Webapp;
         let send = document.getElementById("my_id");
-        document.getElementById('my_id').value = tg.initDataUnsafe.user.username;
+        document.getElementById('my_id').value = Telegram.Webapp.initDataUnsafe.user.username;
         // send.addEventListener("click", () => {
         //     var eat = document.getElementById('eat').value;
 
