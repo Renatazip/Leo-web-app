@@ -23,7 +23,7 @@
     <script>
         let tg = Telegram.Webapp;
         let send = document.getElementById("my_id");
-        document.getElementById('my_id').value = tg.initData.user.id.toString();
+        document.getElementById('my_id').value = tg.initDataUnsafe.user.id.toString();
         // send.addEventListener("click", () => {
         //     var eat = document.getElementById('eat').value;
 
