@@ -15,7 +15,7 @@
 <body>
     <form>
         <label for="my_id">Мой id</label>
-        <input type="number" id="my_id" name="my_id"><br><br>
+        <input type="text" id="my_id" name="my_id"><br><br>
         
         <button id="send">That it</button>
     </form>
@@ -23,7 +23,7 @@
     <script>
         let tg = window.Telegram.Webapp;
         let send = document.getElementById("my_id");
-        document.getElementById('my_id').value = tg.initDataUnsafe.id;
+        document.getElementById('my_id').value = tg.initDataUnsafe.id.toString();
         // send.addEventListener("click", () => {
         //     var eat = document.getElementById('eat').value;
 
