@@ -14,27 +14,27 @@
 </style>
 <body>
     <form>
-        <label for="eat">Что ты ела?</label>
-        <input type="text" id="eat" name="eat"><br><br>
+        <label for="my_id">Мой id</label>
+        <input type="text" id="my_id" name="my_id"><br><br>
         
-        <button id="send">Сохранить прием пищи</button>
+        <button id="send">That it</button>
     </form>
     
     <script>
         let tg = window.Telegram.Webapp;
-        let send = document.getElementById("send");
-        
-        send.addEventListener("click", () => {
-            var eat = document.getElementById('eat').value;
+        let send = document.getElementById("my_id");
+        document.getElementById('my_id').value = tg.initDataUnsafe.id;
+        // send.addEventListener("click", () => {
+        //     var eat = document.getElementById('eat').value;
 
-            let data = {
-                eat: eat
-            }
+        //     let data = {
+        //         eat: eat
+        //     }
 
-            tg.sendData(JSON.stringify(data));
+        //     tg.sendData(JSON.stringify(data));
 
-            tg.close();
-        });
+        //     tg.close();
+        // });
 
 
     
