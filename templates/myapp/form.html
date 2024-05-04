@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Diary Note</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/reset_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/font/stylesheet.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/style.css' %}">
+    <script>
+
+        function setValueById(id, value) {
+            var inputField = document.getElementById(id);
+            inputField.value = value;
+            var rangeListNumber = 1;
+            if (id === "id_level_before") {
+                rangeListNumber = 0;
+            }
+            for (var i = 0; i < 5; i++) {
+                var setToDefault = document.getElementsByClassName("range_list")[rangeListNumber].children[i];
+                setToDefault.style.width = "16px";
+                setToDefault.style.height = "16px";
+                setToDefault.style.borderWidth = "8px";
+            }
+            var setSelected = document.getElementsByClassName("range_list")[rangeListNumber].children[value - 1];
+            setSelected.style.width = "24px";
+            setSelected.style.height = "24px";
+            setSelected.style.borderWidth = "7px";
+
+            var dictionaryOfColors = {1: "#B53C81", 2: "#FFB646", 3: "#9AB93A", 4: "#84CCD5", 5: "#000E89"};
+            var dictionaryOfTexts = {
+                0: {
+                    1: "Ни сыт, ни голоден – нейтральное состояние, когда вы не ощущаете ни сигналов сытости, ни сигналов голода",
+                    2: "Слегка голоден – легкое чувство голода, ощущение пустоты в желудке. Вы становитесь более рассеянным, отвлекаетесь",
+                    3: "Хочу есть! – яркое чувство голода, бурчание, пустота или сосущее ощущение в желудке, снижение внимания и концентрации",
+                    4: "Очень голоден – нарастает утомление и раздражительность. Боли и спазмы в желудке, тошнота, головная боль. Вы готовы съесть все, что угодно",
+                    5: "Умираю от голода – резкая слабость, головокружение, иногда спутанность сознания"
+                },
+                1: {
+                    1: "Ни сыт, ни голоден – нейтральное состояние, когда вы не ощущаете ни сигналов сытости, ни сигналов голода",
+                    2: "Слегка сыт - легкое ощущение еды в желудке, удовлетворение",
+                    3: "Сыт – ощущение не слишком наполненного желудка. Чувство комфорта. Если вам предложат десерт, место для него найдется",
+                    4: "Сыт с избытком – ощущение тяжести и дискомфорта в желудке, усталости, сонливости. Одежда давит на живот",
+                    5: "Сильно объелся – ощущение раздутости, тяжести, тошноты. Еда буквально стоит в горле. Ощущение, что не можете смотреть на еду"
+                }
+            };
+
+            var setRangeInfo = document.getElementsByClassName("range_info")[rangeListNumber];
+            setRangeInfo.style.display = "flex";
+            var setRangeIndicator = document.getElementsByClassName("range_indicator")[rangeListNumber];
+            setRangeIndicator.style.borderColor = dictionaryOfColors[value];
+            var setRangeText = document.getElementsByClassName("range_text_value")[rangeListNumber];
+            setRangeText.textContent = dictionaryOfTexts[rangeListNumber][value];
+
+        }
+
+    </script>
+
+</head>
+<body>
+<div class="container">
+    <p class="year">{{ datetime.year }}</p>
+    <p class="day_month">{{ datetime.day }} {{ month }}</p>
+    <form method="post" enctype="multipart/form-data" class="form">
+        {% csrf_token %}
+        <h2 class=date"></h2>
+        <div class="form-group">
+            <label for="id_text_description">Что ты ела?</label>
+            <input type="text" id="id_text_description" name="text_description" placeholder="Я съела...">
+        </div>
+
+        <div class="form-group">
+            <div class="file-upload">
+                <label>
+                    <input type="file" id="id_photo" name="photo" placeholder="Добавить фото">
+                    <div class="add_photo_box">
+
+                    <img src="{% static 'myapp/img/add_photo.svg' %}" alt="" class="add_photo_sign">
+                    <p>Добавить фото</p>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_time">Во сколько?</label>
+            {{ form.time }}
+        </div>
+        <div class="form-group">
+            <label for="id_level_before">Уровень голода до еды</label>
+            <input type="number" id="id_level_before" name="level_before" min="1" max="5" class="level_before">
+            <div class="range_list">
+                <button class="range_item" onclick="setValueById('id_level_before', 1)"></button>
+                <button class="range_item" onclick="setValueById('id_level_before', 2)"></button>
+                <button class="range_item" onclick="setValueById('id_level_before', 3)"></button>
+                <button class="range_item" onclick="setValueById('id_level_before', 4)"></button>
+                <button class="range_item" onclick="setValueById('id_level_before', 5)"></button>
+            </div>
+            <div class="range_nums">
+                <p class="num">1</p>
+                <p class="num">2</p>
+                <p class="num">3</p>
+                <p class="num">4</p>
+                <p class="num">5</p>
+            </div>
+            <div class="range_info">
+                <div class="range_indicator">
+                </div>
+                <div class="range_text">
+                    <p class="range_text_value">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="id_reason_of_eat">Причины поесть</label>
+            {{ form.reason_of_eat }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_level_after">Уровень насыщения после еды</label>
+            <input type="number" id="id_level_after" name="level_after" min="1" max="5" class="level_after">
+            <div class="range_list">
+                <button class="range_item" onclick="setValueById('id_level_after', 1)"></button>
+                <button class="range_item" onclick="setValueById('id_level_after', 2)"></button>
+                <button class="range_item" onclick="setValueById('id_level_after', 3)"></button>
+                <button class="range_item" onclick="setValueById('id_level_after', 4)"></button>
+                <button class="range_item" onclick="setValueById('id_level_after', 5)"></button>
+            </div>
+            <div class="range_nums">
+                <p class="num">1</p>
+                <p class="num">2</p>
+                <p class="num">3</p>
+                <p class="num">4</p>
+                <p class="num">5</p>
+            </div>
+            <div class="range_info">
+                <div class="range_indicator">
+                </div>
+                <div class="range_text">
+                    <p class="range_text_value">
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="id_feelings_after_eating">Ощущения после</label>
+            {{ form.feelings_after_eating }}
+        </div>
+
+        <div class="form-group">
+            <label for="id_comment">Комментарий</label>
+            <textarea id="id_comment" name="comment"
+                      placeholder="Если есть что рассказать еще, напишите тут"></textarea>
+        </div>
+
+        <button type="submit">Сохранить прием пищи</button>
+    </form>
+</div>
+
+</body>
+</html>
